@@ -40,8 +40,10 @@ dependencies:
   firebase_storage: ^13.0.0
   cloud_firestore: ^6.0.0
   provider: ^6.1.5
-  flutter_webrtc: ^1.1.0
-  sdp_transform: ^0.3.2
+  dotted_border: ^2.1.0
+  file_picker: ^10.3.2
+  agora_rtc_engine: ^6.5.2
+  permission_handler: ^12.0.1
 
 
 

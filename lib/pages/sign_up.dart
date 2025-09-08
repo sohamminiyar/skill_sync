@@ -4,8 +4,11 @@ import 'package:skillsync/resources/auth_methods.dart';
 import 'package:skillsync/widgets/custom%20button.dart';
 import 'package:skillsync/widgets/custom_textfiled.dart';
 
+
+
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/signup';
+
   const SignUpScreen({super.key});
 
   @override
@@ -17,6 +20,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final AuthMethods _authMethods = AuthMethods();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _usernameController.dispose();
+    super.dispose();
+  }
 
   void signUpUser() async {
     bool res = await _authMethods.signUpUser(
@@ -120,9 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: CustomTextfiled(
-                  controller: _passwordController,
-                ),
+                child: CustomTextfiled(controller: _passwordController),
               ),
               SizedBox(height: size.height * 0.05),
               Center(

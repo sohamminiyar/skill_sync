@@ -3,19 +3,17 @@ import 'package:skillsync/utils/colors.dart';
 
 class CustomTextfiled extends StatelessWidget {
   final TextEditingController controller;
-  final Function(String)? onTap;
   final bool obscureText;
 
   const CustomTextfiled({
     super.key,
     required this.controller,
-    this.obscureText = false, this.onTap,
+    this.obscureText = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      onSubmitted: onTap,
       controller: controller,
       obscureText: obscureText,
       style: const TextStyle(

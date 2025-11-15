@@ -1,67 +1,68 @@
-// lib/widgets/user_card.dart
 import 'package:flutter/material.dart';
 
 class UserCard extends StatelessWidget {
   final String name;
   final String skills;
   final String imagePath;
-  final VoidCallback? onTap; // Added for navigation
+  final String status; // online/offline
 
   const UserCard({
-    Key? key,
+    super.key,
     required this.name,
     required this.skills,
     required this.imagePath,
-    this.onTap,
-  }) : super(key: key);
+    required this.status,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 4,
-      color: const Color(0xFFF5F5F7),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: InkWell(
-        onTap: onTap, // Trigger navigation
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage(imagePath),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Skills Offered: $skills',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+    final bool isOnline = status == 'online';
+
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      leading: Stack(
+        children: [
+          CircleAvatar(
+            radius: 26,
+            backgroundImage: AssetImage(imagePath),
+            backgroundColor: Colors.grey.shade200,
           ),
+          Positioned(
+            bottom: 2,
+            right: 2,
+            child: Container(
+              width: 12,
+              height: 12,
+              decoration: BoxDecoration(
+                color: isOnline ? Colors.green : Colors.grey,
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: 2),
+              ),
+            ),
+          ),
+        ],
+      ),
+      title: Text(
+        name,
+        style: const TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 16,
+          color: Colors.black87,
         ),
+      ),
+      subtitle: Text(
+        skills,
+        style: const TextStyle(
+          fontSize: 13,
+          color: Colors.black54,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+      trailing: const Icon(
+        Icons.chevron_right,
+        size: 22,
+        color: Colors.black45,
       ),
     );
   }

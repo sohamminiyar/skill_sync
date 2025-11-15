@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:skillsync/utils/colors.dart';
 
@@ -9,11 +10,10 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    final button = ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color(0xFFF65009),
-        minimumSize: const Size(double.infinity, 70), // Height remains 70
-        maximumSize: const Size(double.infinity * 0.5, 70), // Reduced to 50% width
+        minimumSize: const Size(double.infinity, 70), // Full width (mobile)
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -31,5 +31,15 @@ class CustomButton extends StatelessWidget {
         ),
       ),
     );
+
+    // Apply max width constraint only on web
+    return kIsWeb
+        ? Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 250), // max width on web
+        child: button,
+      ),
+    )
+        : button;
   }
 }

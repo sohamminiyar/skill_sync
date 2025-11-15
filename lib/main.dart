@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:skillsync/pages/home_screen.dart';
 import 'package:skillsync/pages/login_screen.dart';
@@ -14,6 +15,17 @@ import 'package:skillsync/widgets/loading_indicatior.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  if(kIsWeb){
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(apiKey: "AIzaSyB9c47x-dYi3A-fUKzlH-sbF8Jl23kGE2E",
+        authDomain: "skillsync-60c0e.firebaseapp.com",
+        projectId: "skillsync-60c0e",
+        storageBucket: "skillsync-60c0e.firebasestorage.app",
+        messagingSenderId: "956418010898",
+        appId: "1:956418010898:web:d1b99c9f218d36bf9e8dcb"
+      ),
+    );
+  }
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(

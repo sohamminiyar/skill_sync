@@ -14,7 +14,7 @@ class _ChatScreenState extends State<ChatScreen> {
       'name': 'Sam',
       'skills': 'Leadership, Team Management',
       'image': 'assets/sam.png',
-      'status': 'online', // You can add status later for UI indications
+      'status': 'online',
     },
     {
       'name': 'Vatalik',
@@ -45,54 +45,60 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: const Color(0xFFF9FAFB),
       body: Column(
         children: [
+          // Search bar
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Search',
+                hintText: 'Search connections',
                 hintStyle: const TextStyle(color: Color(0xFF9E9E9E)),
                 prefixIcon: const Icon(Icons.search, color: Colors.grey),
                 filled: true,
-                fillColor: const Color(0xFFD9D9D9),
+                fillColor: Colors.white,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
                 ),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 16,
-                  horizontal: 20,
-                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 0),
               ),
               style: const TextStyle(color: Colors.black, fontSize: 16),
             ),
           ),
-          const Divider(
-            thickness: 1,
-            indent: 16,
-            endIndent: 16,
-            color: Color(0xFFD9D9D9),
-          ),
+
+          // User list
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: users.length,
+              separatorBuilder: (_, __) => const Divider(
+                height: 1,
+                thickness: 0.6,
+                indent: 72, // aligns with avatar
+                color: Color(0xFFE0E0E0),
+              ),
               itemBuilder: (context, index) {
                 final user = users[index];
                 return UserCard(
                   name: user['name']!,
                   skills: user['skills']!,
                   imagePath: user['image']!,
+                  status: user['status']!,
                 );
               },
             ),
           ),
+
+          // Footer
           const Padding(
-            padding: EdgeInsets.only(bottom: 20.0),
+            padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
-              "No More Connections",
-              style: TextStyle(color: Colors.black54, fontSize: 14),
+              "No more connections",
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: 13,
+              ),
             ),
           ),
         ],

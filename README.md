@@ -1,16 +1,68 @@
-# skillsync
+# 🚀 SkillSync
 
-A new Flutter project.
+**Real-Time Skill Sharing & Live Broadcasting App**
 
-## Getting Started
+SkillSync is a high-performance, Flutter-based cross-platform application that enables users to broadcast live video/audio sessions and learn from others in real-time. By integrating **Agora RTC** for seamless streaming and **Firebase** for scalable backend services, SkillSync provides a robust environment for digital knowledge sharing.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 📌 Overview
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+SkillSync is designed as a one-to-many live broadcasting platform where users can:
+* **Share Skills:** Broadcast live video/audio to a global audience.
+* **Discover:** Browse and join ongoing sessions in real-time.
+* **Interact:** Engage with broadcasters through an integrated real-time chat.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The system ensures **low-latency streaming**, secure token-based access, and dynamic real-time engagement.
+
+---
+
+## 🛠 Tech Stack
+
+### 📱 Frontend
+* **Framework:** Flutter (Dart)
+* **State Management:** Provider
+
+### 🔥 Backend (Firebase)
+* **Authentication:** Secure Email/Password login.
+* **Cloud Firestore:** Real-time NoSQL database for stream metadata and chat.
+* **Firebase Storage:** Scalable media storage for stream thumbnails.
+
+### 📡 Real-Time Communication
+* **Agora RTC Engine:** (`agora_rtc_engine`) for high-quality video/audio streaming.
+* **Token Server:** Go-based backend for secure, time-limited authentication.
+
+### 🔐 Other Integrations
+* `permission_handler`: Seamless camera and microphone access.
+* `http`: REST API communication for token fetching.
+
+---
+
+## ✨ Key Features
+
+* **🎥 Live Streaming:** One-to-many broadcasting using Agora’s `LiveBroadcasting` profile for optimized quality.
+* **👥 Dynamic User Roles:** Clear distinction between **Broadcasters** (hosts) and **Audience** (viewers).
+* **🔐 Secure Access:** Time-limited Agora tokens fetched from an external Go server to prevent unauthorized access.
+* **💬 Real-Time Chat:** Interaction powered by Firestore `snapshots()` for instant messaging during sessions.
+* **👀 Live Viewer Count:** Real-time tracking using Firestore atomic increments.
+* **📂 Lifecycle Management:** Automated creation/deletion of stream listings in Firestore.
+* **🖼 Thumbnail Upload:** Custom stream previews managed via Firebase Storage.
+* **🔎 Stream Discovery:** A real-time dashboard to browse all active live sessions.
+
+---
+
+## 🏗 Project Structure
+
+```text
+lib/
+│── pages/
+│   └── broadcast_screen.dart    # Core Agora streaming & UI logic
+│
+│── resources/
+│   └── firestore_methods.dart   # Firebase CRUD & stream lifecycle operations
+│
+│── providers/
+│   └── user_provider.dart       # Global user state management
+│
+│── config/
+│   └── appid.dart               # Agora configuration & App ID

@@ -70,64 +70,68 @@ lib/
 ---
 
 ## 🔄 Application Workflow
-* **Authentication:** User signs in via Firebase; profile data is synced to Firestore.
 
-* **Discovery:** The Home Screen fetches active stream documents from Firestore.
+This project follows a real-time event-driven architecture to manage live streams and user interactions.
 
-* **Start Streaming:** User sets a title and uploads a thumbnail to Firebase Storage.
+### 1. User Authentication
+* **Sign-in:** Users authenticate via **Firebase Authentication**.
+* **Data Sync:** Upon first login, user profile data is automatically synced to a **Cloud Firestore** document.
 
-** **App fetches a secure token from the Go server.
+### 2. Discovery & Hosting
+* **Discovery:** The Home Screen performs a real-time fetch of active stream documents from the `streams` collection in Firestore.
+* **Start Streaming:**
+    * **Setup:** The host sets a stream title and uploads a thumbnail image to **Firebase Storage**.
+    * **Security:** The app makes an HTTP request to the **Go-based token server** to retrieve a secure RTC token.
+    * **Join:** The user joins the designated **Agora channel** with the role of `Broadcaster`.
 
-** **The user joins the Agora channel as a Broadcaster.
+### 3. Live Interaction
+* **Audience Entry:** Viewers join the channel using the same App ID and channel name, assigned the role of `Audience`.
+* **Viewer Count:** Joining triggers a Firestore update to increment the live viewer count.
+* **Real-time Chat:** Messaging is handled via Firestore sub-collections, allowing for instant text interaction during the stream.
 
-* **Interaction:** Audience members join as Viewers, triggering viewer count updates and enabling real-time chat via Firestore streams.
-
-* **End Stream:** When the host stops, the app leaves the Agora channel and deletes the Firestore document to remove the listing.
+### 4. Session Termination
+* **End Stream:** When the host terminates the session:
+    * The app calls the `leaveChannel()` method in the Agora SDK.
+    * The corresponding **Firestore document** is deleted, immediately removing the stream from the "Live" discovery feed for all users.
 
 ---
 
-## 🚀 Getting Started
+# 🚀 Getting Started
+
 Follow these steps to set up the project and get it running on your local machine.
 
-✅ Prerequisites
+## ✅ Prerequisites
+
 Before you begin, ensure you have the following installed and configured:
+* **Flutter SDK:** Run `flutter doctor` to confirm your environment is ready.
+* **Firebase Project:** A registered project on the [Firebase Console](https://console.firebase.google.com/).
+* **Agora Developer Account:** An active account with a project created in the [Agora Console](https://console.agora.io/).
 
-Flutter SDK: Run flutter doctor to confirm your environment is ready.
+---
 
-Firebase Project: A registered project on the Firebase Console.
+## ⚙️ Setup Instructions
 
-Agora Developer Account: An active account with a project created in the Agora Console.
+### 1. Firebase Setup
+* **Create a Project:** Start a new project in the Firebase Console.
+* **Enable Services:** Enable **Authentication** (Email/Password), **Firestore Database**, and **Storage**.
+* **Add Configuration Files:**
+    * **Android:** Place `google-services.json` in `android/app/`.
+    * **iOS:** Place `GoogleService-Info.plist` in `ios/Runner/`.
 
-⚙️ Setup Instructions
-1. Firebase Setup
-Create a Project: Start a new project in the Firebase Console.
+### 2. Agora Setup
+* **Generate App ID:** Create a project in the Agora Console and copy your **App ID**.
+* **Update Config:** Open `lib/config/appid.dart` and replace the placeholder value with your actual ID.
 
-Enable Services: Navigate to the dashboard and enable Authentication (Email/Password), Firestore Database, and Storage.
-
-Add Configuration Files:
-
-Android: Place google-services.json in android/app/.
-
-iOS: Place GoogleService-Info.plist in ios/Runner/.
-
-2. Agora Setup
-Generate App ID: Create a project in the Agora Console and copy your App ID.
-
-Update Config: Open lib/config/appid.dart and replace the placeholder value with your actual ID.
-
-3. Token Server
-This app requires a Go-based token server to generate RTC tokens for secure communication.
-
-Ensure the server is active and reachable.
-
-Verify that your API endpoint is correctly configured in your Flutter HTTP request logic.
+### 3. Token Server
+This app requires a **Go-based token server** to generate RTC tokens for secure communication.
+* Ensure the server is active and reachable.
+* Verify that your **API endpoint** is correctly configured in your Flutter HTTP request logic.
 
 ---
 
 ## 🛠️ Installation & Run
-Run the following commands in your terminal to get the app started:
 
-Bash
+```bash
 # Fetch the required flutter packages
 flutter pub get
 

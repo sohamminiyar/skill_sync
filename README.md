@@ -66,3 +66,18 @@ lib/
 │
 │── config/
 │   └── appid.dart               # Agora configuration & App ID
+
+## 🔄 Application Workflow
+* **Authentication:** User signs in via Firebase; profile data is synced to Firestore.
+
+* **Discovery:** The Home Screen fetches active stream documents from Firestore.
+
+* **Start Streaming:** User sets a title and uploads a thumbnail to Firebase Storage.
+
+** **App fetches a secure token from the Go server.
+
+** **The user joins the Agora channel as a Broadcaster.
+
+* **Interaction:** Audience members join as Viewers, triggering viewer count updates and enabling real-time chat via Firestore streams.
+
+* **End Stream:** When the host stops, the app leaves the Agora channel and deletes the Firestore document to remove the listing.

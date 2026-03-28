@@ -66,7 +66,7 @@ lib/
 │
 │── config/
 │   └── appid.dart               # Agora configuration & App ID
-
+```
 ---
 
 ## 🔄 Application Workflow
